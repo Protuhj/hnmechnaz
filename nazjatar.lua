@@ -139,7 +139,6 @@ local ALLIANCE_INTRO_CHAIN = {
   -- The achievement criteria encompasses the entire first step of the intro chain
   {type=ACHIEVE, id=13710, criteria=45759, show_self=true}, -- Show self progress on the achievement, rather than account
   {type=QUEST, id=57004, title=L["Create Your Own Strength"]},
-  {type=QUEST, id=56166, title=L["The Needs of the People"]},
   {type=QUEST, id=55361, title=L["The Lost Shaman"]},
   {type=QUEST, id=55362, title=L["Elemental Fury"]},
   {type=QUEST, id=55363, title=L["Rescue the Farseer"]},
@@ -182,7 +181,7 @@ ns.included[MAPID] = function (node, profile)
     return false
 end;
 
-nodes[51003600] = {type=TREASURE, id=INTRO_QUEST, quest=INTRO_QUEST, label=L["intro_quest"], icon="portal", scale=8, note=L["intro_note"], rewards=INTRO_CHAIN_INFO};
+nodes[20001600] = {type=TREASURE, id=INTRO_QUEST, quest=INTRO_QUEST, label=L["intro_quest"], icon="portal", scale=8, note=L["intro_note"], rewards=INTRO_CHAIN_INFO};
 
 -------------------------------------------------------------------------------
 ------------------------------------ RARES ------------------------------------
