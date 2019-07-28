@@ -130,7 +130,21 @@ options.miscNazjatar = {
     width = "normal",
 };
 
+-- Rares and treasures are locked until the intro quest is completed.
+-- This is "A Tempered Blade" (56156) for Alliance and "Save a Friend" (55500) for Horde.
+local INTRO_NOTE = L["intro_note_alliance"];
+local INTRO_QUEST = 56156;
+-- Don't localize "Horde".
+local factionGroup, _ = UnitFactionGroup("player");
+if (factionGroup == "Horde") then
+  INTRO_QUEST = 55500;
+  INTRO_NOTE = L["intro_note_horde"];
+end
+
 ns.included[MAPID] = function (node, profile)
+    if (node.id ~= INTRO_QUEST and not(IsQuestFlaggedCompleted(INTRO_QUEST))) then
+      return false;
+    end
     if node.type == TREASURE then return profile.treasure_nazjatar end
     if node.type == RARE then return profile.rare_nazjatar end
     if node.type == SUPPLY_CHEST then return profile.supply_nazjatar end
@@ -147,6 +161,12 @@ ns.included[MAPID] = function (node, profile)
     end
     return false
 end;
+
+local start = 09452400;
+local function coord(x, y)
+    return start + x*2500000 + y*400;
+end
+nodes[coord(0.5,0.5)] = {type=TREASURE, id=INTRO_QUEST, quest=INTRO_QUEST, label=L["Complete Intro Quest"], icon="portal", scale=10, note=INTRO_NOTE};
 
 -------------------------------------------------------------------------------
 ------------------------------------ RARES ------------------------------------
@@ -319,11 +339,6 @@ nodes[48002427] = {type=RARE, id=150468, quest=55603, note=L["vorkoth_note"], re
 -------------------------------------------------------------------------------
 ---------------------------------- ZONE RARES ---------------------------------
 -------------------------------------------------------------------------------
-
-local start = 09452400;
-local function coord(x, y)
-    return start + x*2500000 + y*400;
-end
 
 nodes[coord(0,0)] = {type=RARE, id=152794, quest=56268, minimap=false, note=L["zone_spawn"], rewards={
     {type=ACHIEVE, id=13691, criteria=45521}, -- Kill

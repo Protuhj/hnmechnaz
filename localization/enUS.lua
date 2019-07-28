@@ -31,11 +31,13 @@ L["iron_chest_note"] = "Open with an Irontide Lockbox Key dropped from mobs in t
 L["mech_chest_note"] = "Open with a Mechanized Supply Key dropped from mobs in the Western Spray.";
 L["rust_chest_note"] = "Open with an Old Rusty Key dropped from mobs in the Western Spray.";
 
-L["options_toggle_treasures_mech"] = "Display locations of locked chests in the Wester Spray."
+L["options_toggle_treasures_mech"] = "Display locations of locked chests in the Western Spray."
 
 -------------------------------------------------------------------------------
 ----------------------------------- NAZJATAR ----------------------------------
 -------------------------------------------------------------------------------
+L["intro_note_alliance"] = "Complete the quest, A Tempered Blade, to unlock rares, treasures, and World Quests on Nazjatar.";
+L["intro_note_horde"] = "Complete the quest, Save a Friend, to unlock rares, treasures, and World Quests on Nazjatar.";
 
 L["alga_note"] = "CAUTION: Cloaked with four adds!";
 L["allseer_note"] = "Spawns anywhere in lower Kal'methir.";

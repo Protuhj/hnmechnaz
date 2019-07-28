@@ -482,5 +482,11 @@ function Addon:GetNodeIcon(node)
         scale = scale * icon.scale;
     end
 
+    -- allow nodes to override their scale (rare)
+    -- useful when a note should always be shown and needs to be visible.
+    if node.scale then
+        scale = node.scale;
+    end
+
     return icon, scale, alpha
 end
