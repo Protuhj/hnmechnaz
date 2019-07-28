@@ -32,6 +32,7 @@ local SUPPLY_CHEST = ns.types.SUPPLY_CHEST;
 local TOY = ns.types.TOY;
 local TREASURE = ns.types.TREASURE;
 local TRANSMOG = ns.types.TRANSMOG;
+local QUEST = ns.types.QUEST;
 
 local MAPID = 1355;
 
@@ -132,13 +133,32 @@ options.miscNazjatar = {
 
 -- Rares and treasures are locked until the intro quest is completed.
 -- This is "A Tempered Blade" (56156) for Alliance and "Save a Friend" (55500) for Horde.
-local INTRO_NOTE = L["intro_note_alliance"];
 local INTRO_QUEST = 56156;
+-- Set up the introductory quest chain information
+local ALLIANCE_INTRO_CHAIN = {
+  -- The achievement criteria encompasses the entire first step of the intro chain
+  {type=ACHIEVE, id=13710, criteria=45759, show_self=true}, -- Show self progress on the achievement, rather than account
+  {type=QUEST, id=57004, title=L["Create Your Own Strength"]},
+  {type=QUEST, id=56166, title=L["The Needs of the People"]},
+  {type=QUEST, id=55361, title=L["The Lost Shaman"]},
+  {type=QUEST, id=55362, title=L["Elemental Fury"]},
+  {type=QUEST, id=55363, title=L["Rescue the Farseer"]},
+  {type=QUEST, id=56156, title=L["A Tempered Blade"]},
+};
+local HORDE_INTRO_CHAIN = {
+-- The achievement criteria encompasses the entire first step of the intro chain
+  {type=ACHIEVE, id=13709, criteria=45756, show_self=true}, -- Show self progress on the achievement, rather than account
+  {type=QUEST, id=57003, title=L["Create Your Own Strength"]},
+  {type=QUEST, id=55384, title=L["Settling In"]},
+  {type=QUEST, id=55385, title=L["Scouting the Pens"]},
+  {type=QUEST, id=55500, title=L["Save A Friend"]}
+};
+local INTRO_CHAIN_INFO =  ALLIANCE_INTRO_CHAIN;
 -- Don't localize "Horde".
 local factionGroup, _ = UnitFactionGroup("player");
 if (factionGroup == "Horde") then
   INTRO_QUEST = 55500;
-  INTRO_NOTE = L["intro_note_horde"];
+  INTRO_CHAIN_INFO = HORDE_INTRO_CHAIN;
 end
 
 ns.included[MAPID] = function (node, profile)
@@ -162,11 +182,7 @@ ns.included[MAPID] = function (node, profile)
     return false
 end;
 
-local start = 09452400;
-local function coord(x, y)
-    return start + x*2500000 + y*400;
-end
-nodes[coord(0.5,0.5)] = {type=TREASURE, id=INTRO_QUEST, quest=INTRO_QUEST, label=L["Complete Intro Quest"], icon="portal", scale=10, note=INTRO_NOTE};
+nodes[51003600] = {type=TREASURE, id=INTRO_QUEST, quest=INTRO_QUEST, label=L["intro_quest"], icon="portal", scale=8, note=L["intro_note"], rewards=INTRO_CHAIN_INFO};
 
 -------------------------------------------------------------------------------
 ------------------------------------ RARES ------------------------------------
@@ -339,6 +355,11 @@ nodes[48002427] = {type=RARE, id=150468, quest=55603, note=L["vorkoth_note"], re
 -------------------------------------------------------------------------------
 ---------------------------------- ZONE RARES ---------------------------------
 -------------------------------------------------------------------------------
+
+local start = 09452400;
+local function coord(x, y)
+    return start + x*2500000 + y*400;
+end
 
 nodes[coord(0,0)] = {type=RARE, id=152794, quest=56268, minimap=false, note=L["zone_spawn"], rewards={
     {type=ACHIEVE, id=13691, criteria=45521}, -- Kill

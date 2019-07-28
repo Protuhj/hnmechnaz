@@ -17,7 +17,7 @@ ns.types = {};
 
 for i, name in ipairs({
     'ACHIEVE', 'CAVE', 'ITEM', 'MISC', 'MOUNT', 'NPC', 'PET', 'RARE',
-    'SUPPLY_CHEST', 'TITLE', 'TOY', 'TRANSMOG', 'TREASURE'
+    'SUPPLY_CHEST', 'TITLE', 'TOY', 'TRANSMOG', 'TREASURE', 'QUEST'
 }) do
     ns.types[name] = i;
 end
@@ -86,7 +86,12 @@ local VERIFIERS = {
         local sourceID = select(2, C_TransmogCollection.GetItemInfo(self.item))
         if not select(2, C_TransmogCollection.PlayerCanCollectSource(sourceID)) then return true end
         return false
-    end
+    end,
+    [ns.types.QUEST] = function (self)
+        if self.quest then return IsQuestFlaggedCompleted(self.quest); end
+        if self.id then return IsQuestFlaggedCompleted(self.id); end
+        return false;
+    end,
 };
 
 local LOADING_ICON = 'Interface\\Icons\\Inv_misc_questionmark';
@@ -105,7 +110,12 @@ local RENDERERS = {
 
             local r, g, b = .6, .6, .6;
             local ctext = "   • "..cname..(c.suffix or '')
-            if (completed or ccomp) then
+            -- First check if we want to show personal character progress achievement
+            if (self.show_self) then
+              if (ccomp) then
+                r, g, b = 0, 1, 0;
+              end
+            elseif (completed or ccomp) then
                 r, g, b = 0, 1, 0;
             end
 
@@ -165,7 +175,18 @@ local RENDERERS = {
 
         tooltip:AddDoubleLine(self.itemLink..suffix, status);
         tooltip:AddTexture(self.itemIcon or LOADING_ICON, {margin={right=2}});
-    end
+    end,
+    [ns.types.QUEST] = function (self, tooltip)
+        local status = '';
+        local id = (self.quest or self.id or nil);
+        if id then
+            local completed = IsQuestFlaggedCompleted(id);
+            status = completed and L['(completed)'] or L['(incomplete)'];
+            tooltip:AddDoubleLine(L["quest"] .. ": " .. self.title, status);
+        else
+          tooltip:AddLine("Invalid quest entry in data file.");
+        end
+    end,
 };
 
 function normalizeNodes ()

@@ -36,8 +36,8 @@ L["options_toggle_treasures_mech"] = "Display locations of locked chests in the 
 -------------------------------------------------------------------------------
 ----------------------------------- NAZJATAR ----------------------------------
 -------------------------------------------------------------------------------
-L["intro_note_alliance"] = "Complete the quest, A Tempered Blade, to unlock rares, treasures, and World Quests on Nazjatar.";
-L["intro_note_horde"] = "Complete the quest, Save a Friend, to unlock rares, treasures, and World Quests on Nazjatar.";
+L["intro_quest"] = "Complete Intro Quest Chain";
+L["intro_note"] = "Complete the introductory quest chain to unlock rares, treasures, and world quests on Nazjatar.";
 
 L["alga_note"] = "CAUTION: Cloaked with four adds!";
 L["allseer_note"] = "Spawns anywhere in lower Kal'methir.";
@@ -177,6 +177,7 @@ L["in_cave"] = "In a cave.";
 L["mount"] = "Mount";
 L["pet"] = "Pet";
 L["toy"] = "Toy";
+L["quest"] = "Quest";
 
 local GREEN = '(|cFF00FF00%s|r)';
 local RED = '(|cFFFF0000%s|r)';
